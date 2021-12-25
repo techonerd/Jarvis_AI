@@ -34,7 +34,7 @@ class MicRecord:
             print("recording...")
         frames = []
 
-        for i in range(0, int(self.RATE / self.CHUNK * record_seconds)):
+        for _ in range(int(self.RATE / self.CHUNK * record_seconds)):
             data = stream.read(self.CHUNK)
             frames.append(data)
         if debug:

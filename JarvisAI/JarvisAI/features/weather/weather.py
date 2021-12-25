@@ -2,18 +2,15 @@ import requests
 
 
 def get_temperature(json_data):
-    temp_in_celcius = json_data['main']['temp']
-    return temp_in_celcius
+    return json_data['main']['temp']
 
 
 def get_weather_type(json_data):
-    weather_type = json_data['weather'][0]['description']
-    return weather_type
+    return json_data['weather'][0]['description']
 
 
 def get_wind_speed(json_data):
-    wind_speed = json_data['wind']['speed']
-    return wind_speed
+    return json_data['wind']['speed']
 
 
 def get_weather_data(json_data, city):
@@ -35,10 +32,8 @@ def main_weather(city):
     units_format = "&units=metric"
     final_url = api_address + city + units_format
     json_data = requests.get(final_url).json()
-    weather_details = get_weather_data(json_data, city)
-    return weather_details
+    return get_weather_data(json_data, city)
 
 
 def weather_app(city):
-    weather_res = main_weather(city)
-    return weather_res
+    return main_weather(city)
