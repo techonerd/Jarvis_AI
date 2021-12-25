@@ -4,9 +4,8 @@ import re
 
 def website_opener(domain):
     extension = re.search(r"[.]", domain)
-    if not extension:
-        if not domain.endswith(".com"):
-            domain = domain + ".com"
+    if not extension and not domain.endswith(".com"):
+        domain = domain + ".com"
     try:
         url = 'https://www.' + domain
         webbrowser.open(url)

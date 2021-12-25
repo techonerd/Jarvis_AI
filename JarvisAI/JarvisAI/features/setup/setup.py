@@ -26,12 +26,10 @@ class Setup:
             os.makedirs('config')
         config = configparser.ConfigParser()
 
-        if os.path.exists('config'):
-            sure = str(input("Your current configuration will be deleted, are you sure (y/n): ") or "n")
-            if sure == "n":
-                print("No changes done")
-                return False
-            else:
-                return self.start_sconfig(config)
-        else:
+        if not os.path.exists('config'):
             return self.start_sconfig(config)
+        sure = str(input("Your current configuration will be deleted, are you sure (y/n): ") or "n")
+        if sure != "n":
+            return self.start_sconfig(config)
+        print("No changes done")
+        return False

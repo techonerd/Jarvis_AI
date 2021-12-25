@@ -117,20 +117,19 @@ class JarvisAssistant:
             config = configparser.ConfigParser()
             config.read('config/config.ini')
             user_name = config['default']['user_name']
+        elif self.token is None:
+            cprint("TOKEN NOT FOUND",
+                   color='yellow')
+            cprint("Set 'obj = JarvisAI.JarvisAssistant(sync=true, token='xyz')' if you want to use this API",
+                   color='red')
+            cprint("Obtain your token from: http://jarvis-ai-api.herokuapp.com/", color='green')
+            print("Currently using local config from 'config/config.ini' . . .")
+            config = configparser.ConfigParser()
+            config.read('config/config.ini')
+            user_name = config['default']['user_name']
         else:
-            if self.token is None:
-                cprint("TOKEN NOT FOUND",
-                       color='yellow')
-                cprint("Set 'obj = JarvisAI.JarvisAssistant(sync=true, token='xyz')' if you want to use this API",
-                       color='red')
-                cprint("Obtain your token from: http://jarvis-ai-api.herokuapp.com/", color='green')
-                print("Currently using local config from 'config/config.ini' . . .")
-                config = configparser.ConfigParser()
-                config.read('config/config.ini')
-                user_name = config['default']['user_name']
-            else:
-                status, res = self.jarvisai_api.get_user_data(self.token)
-                user_name = res['data']['name_']
+            status, res = self.jarvisai_api.get_user_data(self.token)
+            user_name = res['data']['name_']
 
         try:
             r = sr.Recognizer()
@@ -164,8 +163,9 @@ class JarvisAssistant:
         :return: str
             User's voice input as text
         """
-        transcription = self.speech_recognition_ai.start_speech_recognition(record_seconds=record_seconds, debug=debug)
-        return transcription
+        return self.speech_recognition_ai.start_speech_recognition(
+            record_seconds=record_seconds, debug=debug
+        )
 
     def text2speech(self, text, lang='en'):
         """
